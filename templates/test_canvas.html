@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sketch Test</title>
+    <style>
+        canvas {
+            border: 2px solid red;
+            cursor: crosshair;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sketch Canvas Test</h1>
+    <p>Try drawing on the canvas below:</p>
+    <canvas id="testCanvas" width="400" height="300"></canvas>
+    <br>
+    <button onclick="clearCanvas()">Clear</button>
+    
+    <script>
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        let drawing = false;
+        
+        canvas.addEventListener('mousedown', () => {
+            drawing = true;
+            console.log('Mouse down - drawing started');
+        });
+       canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            console.log('Mouse up - drawing stopped');
+        });
+        
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            console.log('Drawing at', x, y);
+            
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        
+        function clearCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+flask
+Pillow
+opencv-python
+numpy
+requests
+
+# Heavy ML libraries (may take significant time and disk space)
+torch
+torchvision
+diffusers
+transformers
+accelerate
+ultralytics

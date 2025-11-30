@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Playground Arena (Static Website)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+  </head>
+  <body>
+    <!-- This file is a static copy of the Flask template so the project can run as a website. -->
+    <nav class="navbar navbar-dark navbar-expand-lg app-topbar">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <div class="brand-logo me-2"><i class="fa-solid fa-gamepad"></i></div>
+          <div>
+            <div class="brand-title">AI Playground Arena</div>
+            <div class="brand-sub">Gamified Vision Sandbox</div>
+          </div>
+        </a>
+        <div class="ms-auto d-flex align-items-center">
+          <button class="btn btn-outline-light btn-sm me-2">Sign In</button>
+          <button class="btn btn-accent btn-sm">Start Game</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero container-fluid">
+      <div class="hero-blur hero-blur-1"></div>
+      <div class="hero-blur hero-blur-2"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <div class="hero-badge"><span class="badge-icon">⚡</span> AI Gaming Platform</div>
+            <h1 class="hero-title">Playground Arena</h1>
+            <p class="hero-subtitle">Gamified Vision Sandbox</p>
+            <p class="hero-description">Experiment with object detection, creative sketches, and generative AI — all powered right in your browser. No downloads. No limits.</p>
+            <div class="hero-features">
+              <div class="feature-item"><i class="fas fa-bullseye"></i> Object Detection</div>
+              <div class="feature-item"><i class="fas fa-paintbrush"></i> Sketch-to-Image</div>
+              <div class="feature-item"><i class="fas fa-cube"></i> GAN Lab</div>
+            </div>
+            <div class="hero-cta">
+              <button id="btnStartDemo" class="btn btn-accent btn-lg hero-btn"><i class="fas fa-play-circle"></i> Try Demo</button>
+              <button class="btn btn-outline-light btn-lg hero-btn-secondary"><i class="fas fa-external-link-alt"></i> Learn More</button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-accent-box">
+              <div class="box-icon">🎮</div>
+            </div>
+            <div class="floating-card card-1">Object Detection</div>
+            <div class="floating-card card-2">Sketch Forge</div>
+            <div class="floating-card card-3">GAN Lab</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid main-area py-4">
+      <!-- content copied from template (static mode) -->
+      <!-- Left as-is; main JS will run in simulator mode if no backend is present -->
+      <!-- For brevity this static page references the same static assets in website/static/ -->
+      <div class="row gx-4">
+        <div class="col-lg-8">
+          <div class="modes-header mb-3">
+            <ul class="nav nav-pills mode-pills" id="modeTabs">
+              <li class="nav-item"><button class="nav-link active" data-mode="detect"><i class="fa-solid fa-bullseye"></i> Object Arena</button></li>
+              <li class="nav-item"><button class="nav-link" data-mode="sketch"><i class="fa-solid fa-pencil-ruler"></i> Sketch Forge</button></li>
+              <li class="nav-item"><button class="nav-link" data-mode="gan"><i class="fa-solid fa-dice"></i> GAN Lab</button></li>
+            </ul>
+          </div>
+
+          <!-- Panels (simplified for static) -->
+          <div id="mode-detect" class="mode-panel card-panel p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <h4 class="mb-1 accent">🎯 Object Removal Arena</h4>
+                <div class="muted">Upload an image, detect objects, edit or remove them. Score points!</div>
+              </div>
+              <div>
+                <input type="file" id="detectImageInput" accept="image/*" class="form-control form-control-sm mb-1">
+                <button class="btn btn-outline-light btn-sm" id="btnRunDetection">Run Detection</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5">
+                <h6 class="muted mb-2">Detected Objects <span class="badge bg-accent" id="bboxCount">0</span></h6>
+                <div id="bboxList" class="bbox-list"></div>
+              </div>
+              <div class="col-md-7">
+                <h6 class="muted mb-2">Image Preview</h6>
+                <div class="canvas-wrap border bg-black p-2">
+                  <canvas id="detectCanvas" style="max-width:100%; height:auto;"></canvas>
+                </div>
+                <div class="mt-2 d-grid gap-2">
+                  <button class="btn btn-accent" id="btnApplyEdits">✓ Apply Selected Edits</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6 class="muted mb-2">Edited Result:</h6>
+              <div class="canvas-wrap border bg-black p-2">
+                <img id="editedImage" class="img-fluid edited-preview" style="max-width:100%; height:auto; display:none;" />
+                <div id="noEditMessage" class="muted small text-center py-5">Apply edits to see the result here</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="mode-sketch" class="mode-panel card-panel p-3 mb-3 d-none">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <h4 class="mb-1 accent">🎨 Sketch-to-Image Forge</h4>
+                <div class="muted">Draw a sketch and transform it into stylized art.</div>
+              </div>
+            </div>
+
+            <!-- Style selection -->
+            <div class="mb-3">
+              <h6 class="muted mb-2">Select Style</h6>
+              <div class="d-flex gap-2 mb-3">
+                <button class="sketch-style-btn active" data-style="cartoon">🎭 Cartoon</button>
+                <button class="sketch-style-btn" data-style="anime">✨ Anime</button>
+                <button class="sketch-style-btn" data-style="realistic">📷 Realistic</button>
+                <button class="sketch-style-btn" data-style="stylized">🎨 Stylized</button>
+              </div>
+            </div>
+
+            <!-- Guidance & Steps sliders -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label class="muted small">Guidance Scale</label>
+                  <span class="badge bg-accent"><span id="guidanceValue">3</span></span>
+                </div>
+                <input type="range" id="guidanceScale" class="form-range" value="3" min="1" max="10" step="0.5">
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label class="muted small">Inference Steps</label>
+                  <span class="badge bg-accent"><span id="stepsValue">15</span></span>
+                </div>
+                <input type="range" id="numSteps" class="form-range" value="15" min="5" max="30" step="1">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="muted mb-2">Draw Sketch</h6>
+                <canvas id="sketchCanvas" class="border sketch-canvas"></canvas>
+                <div class="mt-2">
+                  <button class="btn btn-outline-light btn-sm" id="btnClearSketch">Clear</button>
+                  <button class="btn btn-accent btn-sm" id="btnGenerateFromSketch">Generate</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h6 class="muted">Generated Image</h6>
+                <img id="sketchOutput" class="img-fluid border" />
+              </div>
+            </div>
+          </div>
+
+          <div id="mode-gan" class="mode-panel card-panel p-3 mb-3 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h4 class="mb-1 accent">🎲 GAN Playground</h4>
+                <div class="muted">Play with latent space and noise for creative outputs.</div>
+              </div>
+              <div>
+                <label class="muted small me-2">Latent dim</label>
+                <input type="number" id="latentDim" value="16" min="4" max="128" class="form-control form-control-sm d-inline-block" style="width:90px;">
+                <label class="muted small ms-3 me-2">Noise</label>
+                <input type="number" id="noiseScale" value="1.0" step="0.1" min="0.1" max="5" class="form-control form-control-sm d-inline-block" style="width:90px;">
+                <button class="btn btn-accent btn-sm ms-3" id="btnGanGenerate">Generate</button>
+              </div>
+            </div>
+
+            <div>
+              <img id="ganOutput" class="border gan-output" />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-panel p-3 mb-3 leaderboard">
+            <h5 class="accent mb-2">Leaderboard</h5>
+            <div class="muted small mb-2">Top creators and high scores</div>
+            <ul class="list-unstyled leaderboard-list">
+              <li class="d-flex justify-content-between"><span>PlayerOne</span><strong class="accent">320</strong></li>
+              <li class="d-flex justify-content-between"><span>SketchMaster</span><strong class="accent">285</strong></li>
+              <li class="d-flex justify-content-between"><span>GANlord</span><strong class="accent">240</strong></li>
+            </ul>
+          </div>
+
+          <div class="card-panel p-3 mb-3 info-panel">
+            <h6 class="accent">How to play</h6>
+            <ol class="muted">
+              <li>Choose a mode from the left.</li>
+              <li>Upload / draw / tweak parameters.</li>
+              <li>Apply edits and earn points.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="static/js/main.js"></script>
+  </body>
+</html>

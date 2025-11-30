@@ -1,0 +1,10 @@
+flask
+ultralytics
+opencv-python
+Pillow
+torch
+torchvision
+numpy
+diffusers
+transformers
+accelerate
