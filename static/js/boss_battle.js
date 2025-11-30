@@ -36,10 +36,12 @@ class BossBattle {
   }
   
   init() {
+    if (this.initialized) return;
     if (!this.canvas || !this.ctx) {
       console.error("Boss canvas not found!");
       return;
     }
+    this.initialized = true;
     
     // Set canvas size
     this.canvas.width = 800;
